@@ -44,40 +44,48 @@ export default function Login() {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Login</h2>
-            {errorMessage && (
-                <div className="alert alert-danger" role="alert">
-                    {errorMessage}
+        <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}  >
+            <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
+                <div className="card-body">
+                    <h2>Login</h2>
+                    {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                            {errorMessage}
+                        </div>
+                    )}
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username</label>
+                            <input
+                                type="text"
+                                id="username"
+                                className="form-control"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                className="form-control"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="container d-flex flex-column align-items-center mt-3 gap-3">
+                            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+                                {loading ? 'Cargando...' : 'Login'}
+                            </button>
+                            <a href="/reset-password" className="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                        </div>
+
+                    </form>
                 </div>
-            )}
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="username" className="form-label">Username</label>
-                    <input
-                        type="text"
-                        id="username"
-                        className="form-control"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary" disabled={loading}>
-                    {loading ? 'Cargando...' : 'Login'}
-                </button>
-            </form>
+            </div>
         </div>
     )
 }

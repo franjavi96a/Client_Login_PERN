@@ -4,6 +4,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import DashboardAdmin from "./components/DashboardAdmin";
 import DashboardEmpleado from "./components/DashboardEmpleado";
+import ResetPassword from "./components/ResetPassword";
+import RecoverPassword from "./components/RecoverPassword";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboardAdmin" element={<DashboardAdmin />} />
         <Route path="/dashboardEmpleado" element={<DashboardEmpleado />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/recover-password" element={<RecoverPassword />} />
       </Routes>
     </Router>
   );
