@@ -29,7 +29,7 @@ export default function Login() {
 
             // Redirigir según el role_id obtenido del token
             if (decoded.role_id === "491debd8-1105-43c1-8e7e-bc3a805d6ba9") {
-                navigate("/register");
+                navigate("/dashboardAdmin");
             } else if (decoded.role_id === "13f0c2e0-8f78-48b6-b9ff-a9aa618eb004") {
                 navigate("/dashboardEmpleado");
             } else {
