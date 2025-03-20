@@ -47,7 +47,7 @@ export default function Login() {
         <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}  >
             <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
                 <div className="card-body">
-                    <h2>Login</h2>
+                    <h2 className='text-center'>Login</h2>
                     {errorMessage && (
                         <div className="alert alert-danger" role="alert">
                             {errorMessage}
