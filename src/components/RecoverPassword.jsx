@@ -6,6 +6,7 @@ export default function RecoverPassword() {
 
     const [token, setToken] = useState('');
     const [newPassword, setNewPassword] = useState('');
+    const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -14,6 +15,7 @@ export default function RecoverPassword() {
         setErrorMessage('');
         setLoading(true);
         try {
+            if (newPassword !== password) throw new Error('Las contraseñas no coinciden');
             await axios.put(`${import.meta.env.VITE_API_URL}/reset-password`, { token, newPassword });
             alert('Contraseña cambiada exitosamente');
             setToken('');
@@ -54,8 +56,18 @@ export default function RecoverPassword() {
                                 type="password"
                                 className="form-control"
                                 id="newPassword"
+                                value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required />
+                        </div>
+                        <div className='mb-3'>
+                            <label className='form-label'>Confirmar Contraseña</label>
+                            <input
+                                className='form-control'
+                                type='password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
                         <div className="container d-flex flex-column align-items-center mt-2 gap-2">
                             <button
