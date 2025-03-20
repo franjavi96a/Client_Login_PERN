@@ -9,7 +9,7 @@ export default function ProtectedRouteAdmin() {
         if (!token) return <Navigate to="/" replace />
         //Decodificar el token
         const decoded = jwtDecode(token);
-        return decoded.role_id === "491debd8-1105-43c1-8e7e-bc3a805d6ba9" ? <Outlet /> : <Navigate to="/" />
+        return decoded.role_id === `${import.meta.env.VITE_ADMIN_ROLE_ID}` ? <Outlet /> : <Navigate to="/" />
     } catch (error) {
         console.log(error);
         return <Navigate to="/" replace />

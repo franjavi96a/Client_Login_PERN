@@ -9,7 +9,7 @@ export default function ProtectedRouteEmpleado() {
         if (!token) return <Navigate to="/" replace />
         //Decodificar el token
         const decoded = jwtDecode(token);
-        return decoded.role_id === "13f0c2e0-8f78-48b6-b9ff-a9aa618eb004" ? <Outlet /> : <Navigate to="/" />
+        return decoded.role_id === `${import.meta.env.VITE_EMPLEADO_ROLE_ID}` ? <Outlet /> : <Navigate to="/" />
     } catch (error) {
         console.log(error);
         return <Navigate to="/" replace />

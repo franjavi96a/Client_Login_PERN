@@ -28,9 +28,9 @@ export default function Login() {
             const decoded = jwtDecode(token);
 
             // Redirigir según el role_id obtenido del token
-            if (decoded.role_id === "491debd8-1105-43c1-8e7e-bc3a805d6ba9") {
+            if (decoded.role_id === `${import.meta.env.VITE_ADMIN_ROLE_ID}`) {
                 navigate("/dashboardAdmin");
-            } else if (decoded.role_id === "13f0c2e0-8f78-48b6-b9ff-a9aa618eb004") {
+            } else if (decoded.role_id === `${import.meta.env.VITE_EMPLEADO_ROLE_ID}`) {
                 navigate("/dashboardEmpleado");
             } else {
                 setErrorMessage("Rol de usuario no reconocido");
