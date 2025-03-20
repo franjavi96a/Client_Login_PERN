@@ -41,7 +41,10 @@ export default function Register() {
 
         } catch (error) {
             setErrorMessage('Error al registrar usuario');
+            setLoading(false);
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 

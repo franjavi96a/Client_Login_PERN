@@ -1,8 +1,18 @@
 import React from 'react'
-import { Link, Links } from 'react-router-dom'
-import { FaSignOutAlt } from "react-icons/fa"; // Import the FaSignOutAlt icon
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+
 
 export default function NavbarAdmin() {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    }
+
     return (
         <div className='navbar navbar-expand-lg navbar-light bg-primary mb-4'>
             <div className='container-fluid'>
@@ -22,7 +32,7 @@ export default function NavbarAdmin() {
                 </div>
 
                 {/* Salida de la Aplicacion */}
-                <a className='navbar-brand' href='/'>
+                <a className='navbar-brand' onClick={handleLogout}>
                     Salir
                     <img width="24" height="24" src="https://img.icons8.com/forma-thin-filled/24/exit.png" alt="exit" />
                 </a>
