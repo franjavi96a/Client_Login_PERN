@@ -44,7 +44,7 @@ export default function RecoverPassword() {
                                 type="text"
                                 className="form-control"
                                 id="token"
-                                placeholder='123456'
+                                placeholder='Ingrese codigo de recuperacion'
                                 onChange={(e) => setToken(e.target.value)}
                                 required />
                         </div>
