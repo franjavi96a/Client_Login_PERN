@@ -11,6 +11,7 @@ import ProtectedRouteAdmin from "./components/Administrador/ProtectedRouteAdmin"
 import Register from "./components/Administrador/Register";
 import DashboardAdmin from "./components/Administrador/DashboardAdmin";
 import NavbarAdmin from "./components/Administrador/NavbarAdmin";
+import ListUsers from "./components/Administrador/ListUsers";
 // Empleado
 import ProtectedRouteEmpleado from "./components/Empleado/ProtectedRouteEmpleado";
 import NavBarEmpleado from "./components/Empleado/NavBarEmpleado";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/register" element={<><NavbarAdmin /><Register /></>} />
           <Route path="/dashboardAdmin" element={<><NavbarAdmin /><DashboardAdmin /></>} />
           <Route path="/admin/change-password" element={<><NavbarAdmin /><ChangePassword /></>} />
+          <Route path="/admin/list-users" element={<><NavbarAdmin /><ListUsers /></>} />
         </Route>
 
         {/* //Rutas protegidas para Empleados */}
