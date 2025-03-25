@@ -1,23 +1,22 @@
 import { useState } from 'react'
 import axios from 'axios'
+import swal from 'sweetalert2'
 
 
 export default function ResetPassword() {
 
     const [email, setEmail] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage('');
         setLoading(true);
         try {
-            await axios.post(import.meta.env.VITE_API_URL + '/recover-password', { email });
-            alert('Correo de recuperación enviado exitosamente');
+            const response = await axios.post(import.meta.env.VITE_API_URL + '/recover-password', { email });
+            swal.fire('Email enviado', response.data.message || 'El email ha sido enviado', 'success');
         } catch (error) {
-            setErrorMessage('Email no encontrado');
+            swal.fire('Error', error.response?.data?.message || 'No se pudo enviar el email', 'error');
             console.error(error);
         } finally {
             setLoading(false);
@@ -29,9 +28,6 @@ export default function ResetPassword() {
             <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
                 <div className="card-body">
                     <h5 className="card-title text-center">Recuperar Contraseña</h5>
-                    {errorMessage && (
-                        <div className='alert alert-danger' role='alert'>{errorMessage}</div>
-                    )}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Email</label>
@@ -39,7 +35,7 @@ export default function ResetPassword() {
                         </div>
                         <div className="container d-flex flex-column align-items-center mt-2 gap-2">
                             <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-                                {loading ? 'Enviando...' : 'Enviar'}
+                                {loading ? 'Enviando...' : 'Enviar Codigo'}
                             </button>
 
                             <a href="/recover-password" className="btn btn-outline-secondary w-100">
