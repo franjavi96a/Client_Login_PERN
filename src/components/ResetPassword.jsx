@@ -14,7 +14,10 @@ export default function ResetPassword() {
         setLoading(true);
         try {
             const response = await axios.post(import.meta.env.VITE_API_URL + '/recover-password', { email });
-            swal.fire('Email enviado', response.data.message || 'El email ha sido enviado', 'success');
+            await swal.fire('Email enviado', response.data.message || 'El email ha sido enviado', 'success')
+                .then(() => {
+                    setEmail('');
+                })
         } catch (error) {
             swal.fire('Error', error.response?.data?.message || 'No se pudo enviar el email', 'error');
             console.error(error);
