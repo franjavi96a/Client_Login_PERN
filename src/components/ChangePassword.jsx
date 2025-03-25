@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert2';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const handleSubmit = async (e) => {
@@ -23,7 +25,7 @@ export default function ChangePassword() {
                     headers: { Authorization: `Bearer ${token}` }
                 }
             );
-            swal.fire('¡Exito!',response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success');
+            swal.fire('¡Exito!', response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success');
         } catch (error) {
             alert(error)
             swal.fire('Error', error.response?.data?.message || 'No se pudo cambiar la contraseña', 'error');
@@ -37,26 +39,56 @@ export default function ChangePassword() {
                 <div className="card-body">
                     <h2 className='text-center'> Cambiar Contraseña</h2>
                     <form onSubmit={handleSubmit}>
-                        <div className='mb-3'>
+                        <div className='mb-3 position-relative'>
                             <label className='form-label'>Nueva Contraseña</label>
                             <input
                                 className='form-control'
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 name="password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required
                             />
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="position-absolute"
+                                style={{
+                                    top: '60%',
+                                    right: '5px',
+                                    transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
                         </div>
-                        <div className='mb-3'>
+                        <div className='mb-3 position-relative'>
                             <label className='form-label'>Confirmar Contraseña</label>
                             <input
                                 className='form-control'
-                                type='password'
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="position-absolute"
+                                style={{
+                                    top: '60%',
+                                    right: '5px',
+                                    transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                    display: 'flex', // Asegura el centramiento interno del ícono
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
                         </div>
                         <div className='d-grid'>
                             <button type="submit" className='btn btn-primary'>Cambiar Contraseña</button>
