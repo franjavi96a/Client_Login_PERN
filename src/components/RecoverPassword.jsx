@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert2';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function RecoverPassword() {
 
@@ -8,6 +9,7 @@ export default function RecoverPassword() {
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,30 +44,60 @@ export default function RecoverPassword() {
                             <label htmlFor="token" className="form-label">Codigo de recuperacion</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                className="form-control border-dark"
                                 id="token"
                                 placeholder='Ingrese codigo de recuperacion'
                                 onChange={(e) => setToken(e.target.value)}
                                 required />
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-3 position-relative">
                             <label htmlFor="newPassword" className="form-label">Nueva contraseña</label>
                             <input
-                                type="password"
-                                className="form-control"
+                                type={showPassword ? "text" : "password"}
+                                className="form-control border border-dark"
                                 id="newPassword"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 required />
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="position-absolute"
+                                style={{
+                                    top: '60%',
+                                    right: '5px',
+                                    transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
                         </div>
-                        <div className='mb-3'>
+                        <div className='mb-3 position-relative'>
                             <label className='form-label'>Confirmar Contraseña</label>
                             <input
-                                className='form-control'
-                                type='password'
+                                className='form-control border border-dark'
+                                type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="position-absolute"
+                                style={{
+                                    top: '60%',
+                                    right: '5px',
+                                    transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                    display: 'flex', // Asegura el centramiento interno del ícono
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
                         </div>
                         <div className="container d-flex flex-column align-items-center mt-2 gap-2">
                             <button

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import swal from 'sweetalert2'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function Register() {
 
@@ -14,6 +15,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -92,26 +94,56 @@ export default function Register() {
                         />
                     </div>
 
-                    <div className='mb-3'>
+                    <div className='mb-3 position-relative'>
                         <label className='form-label'>Contraseña</label>
                         <input
-                            type='password'
+                            type={showPassword ? "text" : "password"}
                             name='password'
                             className='form-control'
                             value={formData.password}
                             required
                             onChange={handleChange}
                         />
+                        <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="position-absolute"
+                            style={{
+                                top: '60%',
+                                right: '5px',
+                                transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                display: 'flex', // Asegura el centramiento interno del ícono
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </div>
                     </div>
 
-                    <div className='mb-3'>
+                    <div className='mb-3 position-relative'>
                         <label className='form-label'>Confirmar Contraseña</label>
                         <input
                             className='form-control'
-                            type='password'
+                            type={showPassword ? "text" : "password"}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
+                        <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="position-absolute"
+                            style={{
+                                top: '60%',
+                                right: '5px',
+                                transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </div>
                     </div>
 
                     <div className='mb-3'>

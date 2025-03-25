@@ -2,12 +2,14 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importar los iconos para mostrar/ocultar la contraseña
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -65,16 +67,31 @@ export default function Login() {
                                 required
                             />
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-3 position-relative"> {/* position-relative  permite posicionarlo dentro del campo */}
                             <label htmlFor="password" className="form-label">Password</label>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 id="password"
                                 className="form-control"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="position-absolute"
+                                style={{
+                                    top: '60%',
+                                    right: '5px',
+                                    transform: 'translate(-50%, 10%)', // Ajusta el centrado tanto vertical como horizontal
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </div>
                         </div>
                         <div className="container d-flex flex-column align-items-center mt-3 gap-3">
                             <button type="submit" className="btn btn-primary w-100" disabled={loading}>
