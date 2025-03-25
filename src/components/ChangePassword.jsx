@@ -12,6 +12,48 @@ export default function ChangePassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+
+            //validar contraseñas
+            const validatePassword = (password) => {
+                const validations = [
+                    {
+                        test: password.length >= 8,
+                        error: 'Las contraseñas deben tener 8 caracteres como mínimo y contener al menos uno de los siguientes elementos: mayúsculas, minúsculas, números y símbolos',
+                    },
+                    {
+                        test: /[A-Z]/.test(password),
+                        error: 'La contraseña debe contener al menos una letra mayúscula',
+                    },
+                    {
+                        test: /[0-9]/.test(password),
+                        error: 'La contraseña debe contener al menos un número',
+                    },
+                    {
+                        test: /[a-z]/.test(password),
+                        error: 'La contraseña debe contener al menos una letra minúscula',
+                    },
+                    {
+                        test: /[@$!%*?&]/.test(password),
+                        error: 'La contraseña debe contener al menos un carácter especial',
+                    },
+                ];
+
+                // Iterar sobre las validaciones y mostrar el primer error
+                for (const validation of validations) {
+                    if (!validation.test) {
+                        swal.fire('Error', validation.error, 'error');
+                        return false;
+                    }
+                }
+
+                return true; // Si todas las validaciones pasan
+            };
+
+            // Ejemplo de uso
+            if (!validatePassword(password)) {
+                return; // Termina la ejecución si la validación falla
+            }
+
             // Comprobar las contraseñas
             if (newPassword !== password) {
                 swal.fire('Error', 'Las contraseñas no coinciden', 'error');
@@ -25,7 +67,11 @@ export default function ChangePassword() {
                     headers: { Authorization: `Bearer ${token}` }
                 }
             );
-            swal.fire('¡Exito!', response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success');
+            swal.fire('¡Exito!', response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success')
+            .then(()=>{//limpiar campos
+                setPassword('');
+                setNewPassword('');
+            })
         } catch (error) {
             alert(error)
             swal.fire('Error', error.response?.data?.message || 'No se pudo cambiar la contraseña', 'error');
