@@ -1,28 +1,31 @@
 import { useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import swal from 'sweetalert2';
 
 export default function RecoverPassword() {
 
     const [token, setToken] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage('');
         setLoading(true);
         try {
-            if (newPassword !== password) throw new Error('Las contraseñas no coinciden');
-            await axios.put(`${import.meta.env.VITE_API_URL}/reset-password`, { token, newPassword });
-            alert('Contraseña cambiada exitosamente');
-            setToken('');
-            setNewPassword('');
-            window.location.href = '/';
+            if (newPassword !== password) {
+                swal.fire('Error', 'Las contraseñas no coinciden', 'error');
+                return;
+            };
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/reset-password`, { token, newPassword });
+            swal.fire('¡Exito!', response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success').then(() => { //.then para esperar que se cierre la alerta
+                setToken('');
+                setNewPassword('');
+                window.location.href = '/';
+            })
+
         } catch (error) {
-            setErrorMessage('Error al cambiar la contraseña');
+            swal.fire('Error', error.response?.data?.message || 'No se pudo cambiar la contraseña', 'error');
             console.log(error);
         } finally {
             setLoading(false);
@@ -34,11 +37,6 @@ export default function RecoverPassword() {
             <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
                 <div className="card-body">
                     <h5 className="card-title text-center">Cambiar Contraseña</h5>
-                    {errorMessage && (
-
-                        <div className='alert alert-danger' role='alert'>{errorMessage}</div>
-
-                    )}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="token" className="form-label">Codigo de recuperacion</label>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios';
+import swal from 'sweetalert2';
 
 export default function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
@@ -9,19 +10,23 @@ export default function ChangePassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Comprar las contraseñas
-            if (newPassword !== password) throw new Error('Las contraseñas no coinciden');
+            // Comprobar las contraseñas
+            if (newPassword !== password) {
+                swal.fire('Error', 'Las contraseñas no coinciden', 'error');
+                return;
+            }
             // Cambiar la contraseña
             const token = localStorage.getItem('token');
             if (!token) throw new Error('No estas autenticado');
-            await axios.put(`${import.meta.env.VITE_API_URL}/change-password`, { newPassword },
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/change-password`, { newPassword },
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
             );
-            alert('Contraseña cambiada exitosamente');
+            swal.fire('¡Exito!',response.data.message || 'La contraseña ha sido cambiada exitosamente', 'success');
         } catch (error) {
             alert(error)
+            swal.fire('Error', error.response?.data?.message || 'No se pudo cambiar la contraseña', 'error');
             console.log(error)
         }
     }

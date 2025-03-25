@@ -15,8 +15,8 @@ export default function NavbarAdmin() {
         <div className='navbar navbar-expand-lg navbar-light bg-primary mb-4'>
             <div className='container-fluid'>
                 <a className='navbar-brand' href='/dashboardAdmin'>
-                    <img src='/public/logo.svg'
-                        width='30' height='30' className='d-inline-block align-top' alt='' />
+                    <img src='/logo.svg'
+                        width='30' height='30' className='d-inline-block align-top' alt='Logo' />
                     {/* Aqui agregar nombre de la Apliacacion */}
                 </a>
 
